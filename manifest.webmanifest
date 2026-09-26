@@ -1,0 +1,16 @@
+{
+  "name": "月白 — わたしの句帳",
+  "short_name": "月白",
+  "start_url": "/tsukishiro/",
+  "display": "standalone",
+  "background_color": "#f6f3eb",
+  "theme_color": "#243a46",
+  "icons": [
+    {
+      "src": "icon.svg?v=2",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
