@@ -5,6 +5,8 @@ const fs=require('node:fs');
 const vm=require('node:vm');
 const path=require('node:path');
 const source=fs.readFileSync(path.join(__dirname,'index.html'),'utf8').match(/<script>([\s\S]*?)<\/script>/)[1];
+test('optional rhythm tags survive reload and can be removed on edit',()=>{const a=app();a.get('extra').checked=true;a.get('short').checked=true;a.save();const b=app(a.stored());b.run('openEditor(entries[0])');assert.equal(b.get('extra').checked,true);assert.equal(b.get('short').checked,true);b.get('extra').checked=false;b.save();assert.equal(JSON.parse(b.stored())[0].extra,false);assert.equal(JSON.parse(b.stored())[0].short,true)});
+test('older notebooks without rhythm tags still load',()=>{const a=app();a.save();const old=JSON.parse(a.stored());delete old[0].extra;delete old[0].short;const b=app(JSON.stringify(old));assert.equal(b.run('storageOK'),true);assert.equal(b.run('entries[0].extra'),false);assert.equal(b.run('entries[0].short'),false)});
 function app(initial=null){
   const nodes=new Map();let stored=initial,failed=false,download;
   function element(){return {value:'',textContent:'',hidden:false,dataset:{},children:[],events:{},classList:{add(){},remove(){}},addEventListener(n,fn){this.events[n]=fn},append(...items){this.children.push(...items)},replaceChildren(...items){this.children=items},setAttribute(){},setCustomValidity(s){this.validation=s},reportValidity(){},focus(){},scrollIntoView(){},showModal(){this.open=true},close(){this.open=false},remove(){},click(){},reset(){for(const id of ['poem','kigo','memo'])get(id).value=''}}}
